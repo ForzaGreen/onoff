@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Switcher</title>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="http://bootswatch.com/darkly/bootstrap.min.css">
+
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"> -->
+<script src="js/bootstrap.min.js"></script>
+
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="js/bootstrap-toggle.min.js"></script>
+
+<style>
+  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 30px; }
+  .toggle.ios .toggle-handle { border-radius: 30px; }
+
+  .btn {
+    padding: 18px 28px;
+    font-size: 22px;
+    /*border-radius: 8px;*/
+}
+</style>
+
+<script src="./js/browserMqtt.js"></script>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Switcher</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+<!--         <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="#">Link</a></li> -->
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- <div id = "temperature"></div> -->
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" role="main">
+
+	<br>
+	<h3 style="text-align: center;">Allumer/Eteindre</h3>
+	<br>
+	<br>
+	<br>
+
+	<div style="width:100%;" >
+	<div style="display: table; margin: 0 auto;">
+		<input
+		id="myCheck" 
+		type="checkbox" data-toggle="toggle" 
+		data-style="ios" data-size="large"
+		data-on="On" data-off="Off" 
+		data-onstyle="success" data-offstyle="danger">
+	</div>
+	
+		
+	</div>
+
+        </div>
+    </div>
+</div>
+
+
+<footer class="navbar-fixed-bottom"> 
+	<div class="container">
+		<div class="row">
+			<p style="text-align:center;">Built with <span class="glyphicon glyphicon-heart text-danger" aria-hidden="true"></span> by PwC.</p> 
+			
+		</div>
+	</div> 
+</footer>
+
+
+
+<script>
+
+var device = {
+	"label":"raspberry2",
+	"device_id":"c26fb1e2-a324-4eaf-bcc5-17ca7bc77509",
+	"account":"2636b13a-6ac4-4645-88dc-9c2305fd2a97",
+	"password":"KgXfAAWRjt/oh35H+vUBkoqNbwUqi4pQwRDP/GGeQBQ="
+};
+const topic = 'xi/blue/v1/' + device.account + '/d/' + device.device_id + '/' + 'piMessage';
+
+var xivelyBroker = mqtt.connect('mqtts://broker.xively.com:443', {username: device.device_id, password: device.password});
+
+xivelyBroker.on('connect', function () {
+	console.log("Connected to Xively");
+	xivelyBroker.subscribe(topic);
+});
+
+xivelyBroker.on('message', function (channel, message) {
+	var timeNow = new Date();
+	var data = message.toString();
+	console.log(timeNow.toJSON() + " [New Message] " + data);
+});
+
+$('#myCheck').change(function() {
+	console.log($(this).prop('checked'));
+	if($(this).prop('checked') === true) {
+		xivelyBroker.publish(topic, "on");
+	} else if ($(this).prop('checked') === false) {
+		xivelyBroker.publish(topic, "off");
+	}
+})
+	
+    </script> 
+</body>
+</html>
