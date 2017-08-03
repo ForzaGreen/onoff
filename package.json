@@ -16,7 +16,7 @@
     "url": "https://github.com/ForzaGreen/onoff/issues"
   },
   "homepage": "https://github.com/ForzaGreen/onoff#readme",
-  "devDependencies": {
+  "dependencies": {
     "chai": "^4.1.0",
     "eslint": "^4.3.0",
     "jsdoc": "^3.5.3",
