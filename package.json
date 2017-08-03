@@ -1,0 +1,26 @@
+{
+  "name": "onoff",
+  "version": "1.0.0",
+  "description": "```\r Front End ---(MQTT PUBLISH)---> Xively (IoT Platform) ---> AWS Kinesis ---> AWS Lambda ---> Phillips HUE API \r                                    |\r                                    |\r                             (MQTT SUBSCRIBE)\r                                    |\r                                    v\r                           Raspberry Pi + LEDs\r ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ForzaGreen/onoff.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ForzaGreen/onoff/issues"
+  },
+  "homepage": "https://github.com/ForzaGreen/onoff#readme",
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "eslint": "^4.3.0",
+    "jsdoc": "^3.5.3",
+    "mocha": "^3.5.0",
+    "mochawesome": "^2.3.0"
+  }
+}
