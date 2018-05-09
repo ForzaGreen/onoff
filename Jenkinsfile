@@ -16,7 +16,8 @@ pipeline {
           whoami
           pwd
           printenv
-          ls -laR
+          ls -al
+          ls -lR
           '''
         }
       }
