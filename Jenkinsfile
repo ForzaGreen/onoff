@@ -1,10 +1,28 @@
+#!/usr/bin/env groovy
+
 pipeline {
-    agent any
-    stages {
-        stage('build') {
-            steps {
-                sh 'npm --version'
-            }
+  agent any 
+
+  environment {
+    MY_KEY = "MY_VALUE"
+  }
+
+  stages {
+
+    stage('Build') {
+      steps {
+        script {
+          sh '''#!/bin/bash
+          whoami
+          pwd
+          printenv
+          ls -laR
+          '''
         }
+      }
     }
+  }
 }
+
+
+
